@@ -27,6 +27,7 @@ def scrape_data(driver):
         # Obtenemos la cantidad de botones (deberían ser 4: Tecnología, Hardware, etc.)
         botones = driver.find_elements(By.XPATH, xpath_botones_principales)
         cantidad_principales = len(botones)
+        logging.info(f"Cantidad de botones principales encontrados: {cantidad_principales}")
 
         for i in range(1, cantidad_principales + 1):
             # Localizamos el botón principal por su índice (XPath empieza en 1)
@@ -36,38 +37,60 @@ def scrape_data(driver):
             )
         
             nombre_seccion = boton_principal.text
-            print(f"--- Entrando a la sección: {nombre_seccion} ---")
+            logging.info(f"Procesando sección: {nombre_seccion}")
         
             # Hacemos clic para desplegar las categorías
             boton_principal.click()
+            logging.info(f"Botón '{nombre_seccion}' clickeado")     
             time.sleep(1) # Breve pausa para que el menú se despliegue
 
-            # 2. Buscamos los enlaces (categorías) dentro del menú desplegado
-            # El XPath de las categorías suele estar en un contenedor que aparece al clickear
-             # Ajusta este XPath según lo que veas en el inspector al abrir el menú
-            xpath_categorias = "//div[contains(@class,'css')]//a[contains(@href, '/')]" 
-            categorias_internas = driver.find_elements(By.XPATH, xpath_categorias)
-        
-            urls_categorias = [c.get_attribute("href") for c in categorias_internas]
+            # Esperamos el contenedor del menú desplegado (ajusta clase si cambia)
+            menu = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]"))
+            )
 
-            logging.info(f"Encontradas {len(urls_categorias)} categorías en la sección {nombre_seccion}")
+            # Obtener subcategorías
+            subcategorias = driver.find_elements(
+                By.XPATH,
+                "/html/body/div[2]/div[3]/div[2]/div[1]/div/a"
+            )
 
-            for url in urls_categorias:
-                print(f"Scrapeando categoría: {url}")
-                driver.get(url)
-            
-                # --- AQUÍ VA TU LÓGICA PARA EXTRAER LOS PRODUCTOS ---
-                # extraer_datos_de_la_pagina(driver)
-            
-                # Volvemos atrás o a la página principal para seguir con el siguiente
-                driver.back() 
-                time.sleep(1)
-            
-                # IMPORTANTE: Si al volver atrás el menú se cierra, 
-                # tendrás que volver a clickear el botón principal 'i'
-                driver.find_element(By.XPATH, xpath_boton).click()
+            cantidad_sub = len(subcategorias)
+            print(f"Subcategorías: {cantidad_sub}")
+
+            for j in range(1, cantidad_sub + 1):
+
+                # IMPORTANTE: reabrir menú cada vez
+                boton_principal = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
+                )
+                boton_principal.click()
                 time.sleep(1)
 
-            print(f"Finalizada la sección {nombre_seccion}")
+                xpath_sub = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div"
+
+                try:
+                    sub = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, xpath_sub))
+                    )
+
+                    nombre_sub = sub.text
+                    print(f"  → Subcategoría: {nombre_sub}")
+
+                    sub.click()
+
+                    # Aquí haces scraping de productos
+                    time.sleep(2)
+
+                    # Volver atrás
+                    driver.back()
+                    time.sleep(2)
+
+                except Exception as e:
+                    print(f"Error en subcategoría {j}: {e}")
+                    continue
+
+        logging.info(f"Finalizada la sección {nombre_seccion}")
+
     except Exception as e:
         logging.error(f"Error al encontrar el elemento: {e}")
