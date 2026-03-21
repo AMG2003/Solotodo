@@ -59,35 +59,13 @@ def scrape_data(driver):
             logging.info(f"Cantidad de subcategorías encontradas: {cantidad_sub}")
 
             for j in range(1, cantidad_sub + 1):
-
-                # IMPORTANTE: reabrir menú cada vez
-                boton_principal = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
+                xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div/a[{j}]"
+                subcategoria = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, xpath_subcategoria))
                 )
-                boton_principal.click()
-                time.sleep(2)
-
-                xpath_sub = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a"
-
-                try:
-                    sub = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, xpath_sub))
-                    )
-
-                    nombre_sub = sub.text
-                    logging.info(f"  → Subcategoría: {nombre_sub}")
-
-                    driver.execute_script("arguments[0].scrollIntoView(true);", sub)
-                    time.sleep(2)
-                    driver.execute_script("arguments[0].click();", sub)
-
-                    # Volver atrás
-                    driver.back()
-                    time.sleep(2)
-
-                except Exception as e:
-                    logging.error(f"Error en subcategoría {j}: {e}")
-                    continue
+                nombre_subcategoria = subcategoria.text
+                logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
+                subcategoria.click()
 
         logging.info(f"Finalizada la sección {nombre_seccion}")
 
