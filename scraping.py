@@ -56,7 +56,7 @@ def scrape_data(driver):
             )
 
             cantidad_sub = len(subcategorias)
-            print(f"Subcategorías: {cantidad_sub}")
+            logging.info(f"Cantidad de subcategorías encontradas: {cantidad_sub}")
 
             for j in range(1, cantidad_sub + 1):
 
@@ -65,9 +65,9 @@ def scrape_data(driver):
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
                 boton_principal.click()
-                time.sleep(1)
+                time.sleep(2)
 
-                xpath_sub = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div"
+                xpath_sub = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a"
 
                 try:
                     sub = WebDriverWait(driver, 10).until(
@@ -75,19 +75,18 @@ def scrape_data(driver):
                     )
 
                     nombre_sub = sub.text
-                    print(f"  → Subcategoría: {nombre_sub}")
+                    logging.info(f"  → Subcategoría: {nombre_sub}")
 
-                    sub.click()
-
-                    # Aquí haces scraping de productos
+                    driver.execute_script("arguments[0].scrollIntoView(true);", sub)
                     time.sleep(2)
+                    driver.execute_script("arguments[0].click();", sub)
 
                     # Volver atrás
                     driver.back()
                     time.sleep(2)
 
                 except Exception as e:
-                    print(f"Error en subcategoría {j}: {e}")
+                    logging.error(f"Error en subcategoría {j}: {e}")
                     continue
 
         logging.info(f"Finalizada la sección {nombre_seccion}")
