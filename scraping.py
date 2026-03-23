@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import logging
 import time
-from extraccion import extraccion_datos
+from extraccion import sub_datos
 
 def configurar_driver():
     chrome_options = Options()
@@ -67,7 +67,7 @@ def scrape_data(driver):
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
                 time.sleep(5) # Breve pausa para que la página se recargue
-                extraccion_datos(driver, nombre_seccion, nombre_subcategoria) # Función para extraer datos de la subcategoría
+                sub_datos(driver, nombre_seccion, nombre_subcategoria) # Función para extraer datos de la subcategoría
                 driver.back() # Volvemos a la página anterior para seleccionar la siguiente subcategoría
                 logging.info(f"Volviendo al home")
                 time.sleep(5) # Breve pausa para que la página se recargue
