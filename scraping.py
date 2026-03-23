@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import logging
 import time
+from extraccion import extraccion_datos
 
 def configurar_driver():
     chrome_options = Options()
@@ -58,7 +59,7 @@ def scrape_data(driver):
             logging.info(f"Cantidad de subcategorías encontradas: {cantidad_sub}")
 
             for j in range(1, cantidad_sub + 1):
-                xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div/a[{j}]"
+                xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div/span"
                 subcategoria = WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, xpath_subcategoria))
                 )
@@ -66,11 +67,16 @@ def scrape_data(driver):
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
                 time.sleep(5) # Breve pausa para que la página se recargue
+                extraccion_datos(driver, nombre_seccion, nombre_subcategoria) # Función para extraer datos de la subcategoría
+                driver.back() # Volvemos a la página anterior para seleccionar la siguiente subcategoría
+                logging.info(f"Volviendo al home")
+                time.sleep(5) # Breve pausa para que la página se recargue
                  # 🔁 REABRIR menú SIEMPRE
                 boton_principal = WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
                 boton_principal.click()
+                logging.info(f"Reabriendo menú principal '{nombre_seccion}' para la siguiente subcategoría")
                 time.sleep(5) # Breve pausa para que el menú se despliegue nuevamente
 
         logging.info(f"Finalizada la sección {nombre_seccion}")
