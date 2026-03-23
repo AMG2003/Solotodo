@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import logging
 import time
-import os
 
 def configurar_driver():
     chrome_options = Options()
@@ -66,6 +65,13 @@ def scrape_data(driver):
                 nombre_subcategoria = subcategoria.text
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
+                time.sleep(5) # Breve pausa para que la página se recargue
+                 # 🔁 REABRIR menú SIEMPRE
+                boton_principal = WebDriverWait(driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
+                )
+                boton_principal.click()
+                time.sleep(5) # Breve pausa para que el menú se despliegue nuevamente
 
         logging.info(f"Finalizada la sección {nombre_seccion}")
 

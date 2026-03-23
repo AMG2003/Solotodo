@@ -1,0 +1,10 @@
+2026-03-22 21:07:53,539 - INFO - Iniciando el proceso de scraping.
+2026-03-22 21:07:54,784 - INFO - Elemento encontrado
+2026-03-22 21:07:54,790 - INFO - Cantidad de botones principales encontrados: 4
+2026-03-22 21:07:54,815 - INFO - Procesando sección: Tecnología
+2026-03-22 21:07:54,907 - INFO - Botón 'Tecnología' clickeado
+2026-03-22 21:07:55,919 - INFO - Cantidad de subcategorías encontradas: 7
+2026-03-22 21:07:55,935 - INFO - Subcategoría encontrada: Notebooks
+2026-03-22 21:08:08,521 - ERROR - Error al encontrar el elemento: 'NoneType' object has no attribute 'is_displayed'
+2026-03-22 21:08:08,522 - INFO - Scraping completado exitosamente.
+2026-03-22 21:08:12,596 - INFO - Driver cerrado.
