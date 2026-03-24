@@ -14,42 +14,83 @@ def configurar_driver():
 
 def sub_datos(driver, nombre_seccion, nombre_subcategoria):
     logging.info(f"Extrayendo datos de la sección '{nombre_seccion}' y subcategoría '{nombre_subcategoria}'")
-    # Aquí iría la lógica para extraer los datos específicos de cada subcategoría
-    # Por ejemplo, podrías buscar los productos listados, sus precios, etc.
-    # Este es un ejemplo genérico y debe ser adaptado a la estructura específica de la página
+    
+    productos_totales = []
+
     try:
-        grill = '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'
-        grill_wait= WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, grill))
+        grilla=WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'))
         )
-        logging.info("Grilla de productos encontrada")
-        svg = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[2]/div"))
-        )
-        svg.click()
-        time.sleep(5) # Esperamos a que se cargue la nueva sección después de hacer click
-        li = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
-        )
-        li.click()
-        time.sleep(5) # Esperamos a que se cargue la nueva sección después de hacer click
-
+        if grilla:
+           logging.info("Grilla de productos encontrada")
+        else:
+           logging.warning("Grilla de productos no encontrada")
+        
         try:
-            numero_productos_string = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[1]/div/div[1]/div/h5/text()[1]"))
-            ).text
-            numero_productos_int = int(numero_productos_string.split()[0])  # Extraemos el número de productos
-            logging.info(f"Número de productos encontrados: {numero_productos_int}")
-            
-        except Exception as e:
-            logging.error(f"Error al interactuar con la página: {e}")
+            boton_svg = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[2]/div"))
+            )
+            boton_svg.click()
+            time.sleep(5) # Esperamos a que se cargue la nueva sección después de hacer click
+            opcion_200 = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
+            )
+            opcion_200.click()
+            time.sleep(3) # Esperamos a que se cargue la nueva sección después de hacer click
 
-        #productos = WebDriverWait(driver, 10).until(
-            #EC.presence_of_all_elements_located((By.CLASS_NAME, 'nombre-clase-producto'))  # Cambia 'nombre-clase-producto' por la clase real
-        #)
-        #for producto in productos:
-           # nombre_producto = producto.find_element(By.CLASS_NAME, 'nombre-clase').text  # Cambia 'nombre-clase' por la clase real
-            #precio_producto = producto.find_element(By.CLASS_NAME, 'precio-clase').text  # Cambia 'precio-clase' por la clase real
-            #logging.info(f"Producto: {nombre_producto}, Precio: {precio_producto}")
+        except Exception as e:
+            logging.warning("no se pudo cambiar a 200")
+        
+        pagina = 1
+        while True:
+            logging.info(f"Scrapeando página {pagina}")
+
+            # 🧲 Obtener productos
+            productos = driver.find_elements(By.XPATH, "//div[contains(@class,'MuiGrid-root')]//a")
+
+            for p in productos:
+                try:
+                    nombre = p.text
+                    link = p.get_attribute("href")
+
+                    # precio (ajustar según estructura real)
+                    precio = p.find_element(By.XPATH, ".//span").text
+
+                    productos_totales.append({
+                        "seccion": nombre_seccion,
+                        "subcategoria": nombre_subcategoria,
+                        "nombre": nombre,
+                        "precio": precio,
+                        "link": link
+                    })
+
+                except Exception as e:
+                    logging.warning(f"Error producto: {e}")
+
+            # 👉 Intentar ir a siguiente página
+            try:
+                boton_siguiente = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[3]/button[3]"))
+                )
+
+                if "disabled" in boton_siguiente.get_attribute("class"):
+                    logging.info("Última página alcanzada")
+                    break
+
+                boton_siguiente.click()
+                logging.info("Botón siguiente clickeado")
+                pagina += 1
+                time.sleep(3)
+
+            except:
+                logging.info("No hay botón siguiente → fin")
+                break
+
+        # 💾 Guardar datos
+        df = pd.DataFrame(productos_totales)
+        df.to_csv(f"{nombre_seccion}_{nombre_subcategoria}.csv", index=False)
+
+        logging.info(f"Total productos extraídos: {len(productos_totales)}")
+
     except Exception as e:
-        logging.error(f"Error al extraer datos de '{nombre_subcategoria}': {e}")
+        logging.error(f"Error : {e}")
