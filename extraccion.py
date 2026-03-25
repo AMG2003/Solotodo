@@ -56,9 +56,14 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
 
             for p in productos:
                 try:
-                    nombre = p.find_element(By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[2]/div[1]/div[7]/div/button/div/a/div/div[2]/div[2]").text
-                    # precio (ajustar según estructura real)
-                    precio = p.find_element(By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[2]/div[1]/div[7]/div/button/div/a/div/div[2]/div[3]").text
+                    nombre_elem = p.find_elements(By.XPATH, ".//div[contains(@class,'MuiTypography-h5')]")
+                    precio_elem = p.find_elements(By.XPATH, ".//div[contains(@class,'MuiTypography-h2')]")
+
+                    if not nombre_elem or not precio_elem:
+                        continue  # 🔥 evita errores
+
+                    nombre = nombre_elem[0].text
+                    precio = precio_elem[0].text
                     link = p.get_attribute("href")
 
                     productos_pagina.append({
