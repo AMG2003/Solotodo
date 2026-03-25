@@ -4,7 +4,7 @@ import logging
 # 🔐 Configuración (ajusta con tus datos)
 DB_USER = "system"
 DB_PASSWORD = "system"
-DB_DSN = "localhost:1521/XEPDB1"  # ejemplo típico Oracle XE
+DB_DSN = "localhost:1521/XE"  # ejemplo típico Oracle XE
 
 
 def conectar_db():
@@ -37,7 +37,7 @@ def insertar_productos(productos):
 
     try:
         cursor.executemany("""
-            INSERT INTO productos (seccion, subcategoria, nombre, precio, link)
+            INSERT INTO PRODUCTOS (seccion, subcategoria, nombre, precio, link)
             VALUES (:1, :2, :3, :4, :5)
         """, data)
 
