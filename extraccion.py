@@ -6,6 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import logging
 import time
+from db import insertar_productos
+
+from db import insertar_productos
 
 def configurar_driver():
     chrome_options = Options()
@@ -15,7 +18,6 @@ def configurar_driver():
 def sub_datos(driver, nombre_seccion, nombre_subcategoria):
     logging.info(f"Extrayendo datos de la sección '{nombre_seccion}' y subcategoría '{nombre_subcategoria}'")
     
-    productos_totales = []
 
     try:
         grilla=WebDriverWait(driver, 10).until(
@@ -48,15 +50,16 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
             # 🧲 Obtener productos
             productos = driver.find_elements(By.XPATH, "//div[contains(@class,'MuiGrid-root')]//a")
 
+            productos_pagina = []
+
             for p in productos:
                 try:
                     nombre = p.text
-                    link = p.get_attribute("href")
-
                     # precio (ajustar según estructura real)
                     precio = p.find_element(By.XPATH, ".//span").text
+                    link = p.get_attribute("href")
 
-                    productos_totales.append({
+                    productos_pagina.append({
                         "seccion": nombre_seccion,
                         "subcategoria": nombre_subcategoria,
                         "nombre": nombre,
@@ -66,6 +69,8 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
 
                 except Exception as e:
                     logging.warning(f"Error producto: {e}")
+            if productos_pagina:
+                insertar_productos(productos_pagina)        
 
             # 👉 Intentar ir a siguiente página
             try:
@@ -85,12 +90,6 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
             except:
                 logging.info("No hay botón siguiente → fin")
                 break
-
-        # 💾 Guardar datos
-        df = pd.DataFrame(productos_totales)
-        df.to_csv(f"{nombre_seccion}_{nombre_subcategoria}.csv", index=False)
-
-        logging.info(f"Total productos extraídos: {len(productos_totales)}")
 
     except Exception as e:
         logging.error(f"Error : {e}")
