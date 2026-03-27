@@ -1,3 +1,5 @@
+import json
+
 import oracledb
 import logging 
 
@@ -30,7 +32,8 @@ def insertar_productos(productos):
             p["subcategoria"],
             p["nombre"],
             float(p["precio"].replace("$", "").replace(".", "").replace(",", "")),
-            p["link"]
+            p["link"],
+            json.dumps(p.get("specs", {}))
         )
         for p in productos
     ]

@@ -1,8 +1,6 @@
-import pandas as pd
 import logging
 import time
 from scraping import scrape_data , configurar_driver
-
 
 logging.basicConfig(
     level=logging.INFO,
