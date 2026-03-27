@@ -12,7 +12,7 @@ def configurar_driver():
     # chrome_options.add_argument("--headless")
     return webdriver.Chrome(options=chrome_options)
 
-def sub_datos(driver, nombre_seccion, nombre_subcategoria):
+def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
     logging.info(f"Extrayendo datos de la sección '{nombre_seccion}' y subcategoría '{nombre_subcategoria}'")
     
 
@@ -47,6 +47,8 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
             # 🧲 Obtener productos
             productos = driver.find_elements(By.XPATH, "//div[contains(@class,'MuiGrid-root')]//a")
 
+            productos_pagina = []
+
             for p in productos:
                 try:
                     nombre_elem = p.find_elements(By.XPATH, ".//div[contains(@class,'MuiTypography-h5')]")
@@ -59,37 +61,22 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria):
                     precio = precio_elem[0].text
                     link = p.get_attribute("href")
 
-                    # 🔥 EXTRAER ESPECIFICACIONES
-                    specs = {}
-
-                    try:
-                        filas = driver.find_elements(By.XPATH, "//table//tr")
-
-                        for fila in filas:
-                            try:
-                                clave = fila.find_element(By.XPATH, ".//th").text.strip()
-                                valor = fila.find_element(By.XPATH, ".//td").text.strip()
-                                specs[clave] = valor
-                            except:
-                                continue
-
-                    except Exception as e:
-                        logging.warning(f"No specs: {e}")
-
-                    # 🔥 guardar en BD
-                    insertar_productos({
+                    
+                    productos_pagina.append({
                         "seccion": nombre_seccion,
                         "subcategoria": nombre_subcategoria,
                         "nombre": nombre,
                         "precio": precio,
-                        "link": link,
-                        "specs": specs
+                        "link": link
                     })
 
                     time.sleep(1)  # evita bloqueo
 
                 except Exception as e:
-                    logging.warning(f"Error producto: {e}")      
+                    logging.warning(f"Error producto: {e}")  
+
+            if productos_pagina:
+             insertar_productos(productos_pagina,conn)            
 
             # 👉 Intentar ir a siguiente página
             try:

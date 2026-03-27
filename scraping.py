@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 import logging
 import time
 from extraccion import sub_datos
+from db import conectar_db
 
 def configurar_driver():
     chrome_options = Options()
@@ -13,6 +14,8 @@ def configurar_driver():
     return webdriver.Chrome(options=chrome_options)
 
 def scrape_data(driver):
+
+    conn = conectar_db()  # Conexión a la base de datos
     
     driver.get('https://www.solotodo.com')
 
@@ -66,7 +69,7 @@ def scrape_data(driver):
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
                 time.sleep(5) # Breve pausa para que la página se recargue
-                sub_datos(driver, nombre_seccion, nombre_subcategoria) # Función para extraer datos de la subcategoría
+                sub_datos(driver, nombre_seccion, nombre_subcategoria,conn) # Función para extraer datos de la subcategoría
                 driver.back() # Volvemos a la página anterior para seleccionar la siguiente subcategoría
                 logging.info(f"Volviendo al home")
                 time.sleep(5) # Breve pausa para que la página se recargue
