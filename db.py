@@ -25,7 +25,7 @@ def insertar_productos(productos,conn):
         for p in productos:
 
             # 1. INSERTAR CATEGORIA
-            cursor.executemany("""
+            cursor.execute("""
                 MERGE INTO dim_categoria c
                 USING (SELECT :1 nombre FROM dual) src
                 ON (c.nombre = src.nombre)
@@ -38,7 +38,7 @@ def insertar_productos(productos,conn):
             id_categoria = cursor.fetchone()[0]
 
             # 3. INSERTAR SUBCATEGORIA
-            cursor.executemany("""
+            cursor.execute("""
                 MERGE INTO dim_subcategoria s
                 USING (SELECT :1 nombre, :2 id_categoria FROM dual) src
                 ON (s.nombre = src.nombre AND s.id_categoria = src.id_categoria)
@@ -56,7 +56,7 @@ def insertar_productos(productos,conn):
             id_subcategoria = cursor.fetchone()[0]
 
             # 5. INSERTAR PRODUCTO
-            cursor.executemany("""
+            cursor.execute("""
                 MERGE INTO dim_producto dp
                 USING (SELECT :link AS link FROM dual) src
                 ON (dp.link = src.link)
@@ -76,7 +76,7 @@ def insertar_productos(productos,conn):
             # 7. INSERTAR PRECIO (HISTÓRICO)
             precio_num = float(p["precio"].replace("$", "").replace(".", "").replace(",", ""))
 
-            cursor.executemany("""
+            cursor.execute("""
                 INSERT INTO fact_precios (id_producto, precio)
                 VALUES (:1, :2)
             """, [id_producto, precio_num])

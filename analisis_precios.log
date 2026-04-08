@@ -1,0 +1,89 @@
+2026-04-08 16:38:17,409 - INFO - Iniciando el proceso de scraping.
+2026-04-08 16:38:17,473 - INFO - Conexión a Oracle exitosa
+2026-04-08 16:38:19,416 - INFO - Elemento encontrado
+2026-04-08 16:38:19,423 - INFO - Cantidad de botones principales encontrados: 4
+2026-04-08 16:38:19,451 - INFO - Procesando sección: Tecnología
+2026-04-08 16:38:19,509 - INFO - Botón 'Tecnología' clickeado
+2026-04-08 16:38:20,521 - INFO - Cantidad de subcategorías encontradas: 7
+2026-04-08 16:38:20,538 - INFO - Subcategoría encontrada: Notebooks
+2026-04-08 16:38:25,582 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Notebooks'
+2026-04-08 16:38:25,582 - INFO - Grilla de productos encontrada
+2026-04-08 16:38:33,704 - INFO - Scrapeando página 1
+2026-04-08 16:41:57,838 - INFO - 200 productos insertados correctamente
+2026-04-08 16:41:57,926 - INFO - Botón siguiente clickeado
+2026-04-08 16:42:00,926 - INFO - Scrapeando página 2
+2026-04-08 16:45:25,125 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:45:25,147 - INFO - Volviendo al home
+2026-04-08 16:45:30,207 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:45:35,218 - INFO - Subcategoría encontrada: Celulares
+2026-04-08 16:45:40,270 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Celulares'
+2026-04-08 16:45:40,274 - INFO - Grilla de productos encontrada
+2026-04-08 16:45:48,367 - INFO - Scrapeando página 1
+2026-04-08 16:49:12,427 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:49:12,454 - INFO - Volviendo al home
+2026-04-08 16:49:17,506 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:49:22,515 - INFO - Subcategoría encontrada: IPhone
+2026-04-08 16:49:27,557 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'IPhone'
+2026-04-08 16:49:27,557 - INFO - Grilla de productos encontrada
+2026-04-08 16:49:35,654 - INFO - Scrapeando página 1
+2026-04-08 16:51:12,479 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:51:12,503 - INFO - Volviendo al home
+2026-04-08 16:51:17,557 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:51:22,572 - INFO - Subcategoría encontrada: Consolas
+2026-04-08 16:51:27,612 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Consolas'
+2026-04-08 16:51:27,612 - INFO - Grilla de productos encontrada
+2026-04-08 16:51:35,708 - INFO - Scrapeando página 1
+2026-04-08 16:52:10,364 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:52:10,376 - INFO - Volviendo al home
+2026-04-08 16:52:15,423 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:52:20,426 - INFO - Subcategoría encontrada: Tablets
+2026-04-08 16:52:25,468 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Tablets'
+2026-04-08 16:52:25,471 - INFO - Grilla de productos encontrada
+2026-04-08 16:52:33,559 - INFO - Scrapeando página 1
+2026-04-08 16:55:44,245 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:55:44,263 - INFO - Volviendo al home
+2026-04-08 16:55:49,322 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:55:54,336 - INFO - Subcategoría encontrada: Wearables
+2026-04-08 16:55:59,373 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Wearables'
+2026-04-08 16:55:59,373 - INFO - Grilla de productos encontrada
+2026-04-08 16:56:07,475 - INFO - Scrapeando página 1
+2026-04-08 16:58:09,738 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 16:58:09,750 - INFO - Volviendo al home
+2026-04-08 16:58:14,799 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 16:58:19,808 - INFO - Subcategoría encontrada: All-In-Ones
+2026-04-08 16:58:24,852 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'All-In-Ones'
+2026-04-08 16:58:24,852 - INFO - Grilla de productos encontrada
+2026-04-08 16:58:32,955 - INFO - Scrapeando página 1
+2026-04-08 17:01:56,856 - ERROR - Error : DPY-1001: not connected to database
+2026-04-08 17:01:56,877 - INFO - Volviendo al home
+2026-04-08 17:02:01,933 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-08 17:02:06,942 - INFO - Procesando sección: Hardware
+2026-04-08 17:02:08,028 - ERROR - Error al encontrar el elemento: Message: element click intercepted: Element <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1guj8av" tabindex="0" type="button">...</button> is not clickable at point (984, 33). Other element would receive the click: <div class="MuiBox-root css-1adbve3"></div>
+  (Session info: chrome=146.0.7680.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff6919129c5+2ed785]
+	chromedriver!GetHandleVerifier [0x7ff69163a0d0+14e90]
+	chromedriver!(No symbol) [0x7ff69139db2d]
+	chromedriver!(No symbol) [0x7ff6913ff0e5]
+	chromedriver!(No symbol) [0x7ff6913fc7fa]
+	chromedriver!(No symbol) [0x7ff6913f9685]
+	chromedriver!(No symbol) [0x7ff6913f8537]
+	chromedriver!(No symbol) [0x7ff6913eb186]
+	chromedriver!(No symbol) [0x7ff69141ff8a]
+	chromedriver!(No symbol) [0x7ff6913eaa06]
+	chromedriver!(No symbol) [0x7ff691443b9b]
+	chromedriver!(No symbol) [0x7ff6913e9298]
+	chromedriver!(No symbol) [0x7ff6913ea183]
+	chromedriver!GetHandleVerifier [0x7ff69193de0d+318bcd]
+	chromedriver!GetHandleVerifier [0x7ff691938588+313348]
+	chromedriver!GetHandleVerifier [0x7ff691959d7a+334b3a]
+	chromedriver!GetHandleVerifier [0x7ff691656785+31545]
+	chromedriver!GetHandleVerifier [0x7ff69165facc+3a88c]
+	chromedriver!GetHandleVerifier [0x7ff691643634+1e3f4]
+	chromedriver!GetHandleVerifier [0x7ff6916437e6+1e5a6]
+	chromedriver!GetHandleVerifier [0x7ff691627e37+2bf7]
+	KERNEL32!BaseThreadInitThunk [0x7ffc58c1e8d7+17]
+	ntdll!RtlUserThreadStart [0x7ffc59f4c3fc+2c]
+
+2026-04-08 17:02:08,028 - INFO - Scraping completado exitosamente.
+2026-04-08 17:02:12,232 - INFO - Driver cerrado.
