@@ -1,23 +1,5 @@
-import oracledb
 import logging 
-# 🔐 Configuración (ajusta con tus datos)
-DB_USER = "system"
-DB_PASSWORD = "system"
-DB_DSN = "localhost:1521/XE" 
 
-def conectar_db():
-    try:
-        conn = oracledb.connect(
-            user=DB_USER,
-            password=DB_PASSWORD,
-            dsn=DB_DSN
-        )
-        logging.info("Conexión a Oracle exitosa")
-        return conn
-    except Exception as e:
-        logging.error(f"Error conectando a Oracle: {e}")
-        raise
-        
 def insertar_productos(productos,conn):
     cursor = conn.cursor()
 
@@ -90,4 +72,3 @@ def insertar_productos(productos,conn):
 
     finally:
         cursor.close()
-        conn.close()

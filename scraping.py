@@ -1,3 +1,4 @@
+import oracledb
 from selenium import webdriver  
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -6,7 +7,23 @@ from selenium.webdriver.chrome.options import Options
 import logging
 import time
 from extraccion import sub_datos
-from db import conectar_db
+
+DB_USER = "system"
+DB_PASSWORD = "system"
+DB_DSN = "localhost:1521/XE" 
+
+def conectar_db():
+    try:
+        conn = oracledb.connect(
+            user=DB_USER,
+            password=DB_PASSWORD,
+            dsn=DB_DSN
+        )
+        logging.info("Conexión a Oracle exitosa")
+        return conn
+    except Exception as e:
+        logging.error(f"Error conectando a Oracle: {e}")
+        raise
 
 def configurar_driver():
     chrome_options = Options()
