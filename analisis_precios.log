@@ -1,0 +1,107 @@
+2026-04-09 11:53:14,714 - INFO - Iniciando el proceso de scraping.
+2026-04-09 11:53:14,755 - INFO - Conexión a Oracle exitosa
+2026-04-09 11:53:15,608 - INFO - Elemento encontrado
+2026-04-09 11:53:15,614 - INFO - Cantidad de botones principales encontrados: 4
+2026-04-09 11:53:15,645 - INFO - Procesando sección: Tecnología
+2026-04-09 11:53:15,797 - INFO - Botón 'Tecnología' clickeado
+2026-04-09 11:53:16,812 - INFO - Cantidad de subcategorías encontradas: 7
+2026-04-09 11:53:16,828 - INFO - Subcategoría encontrada: Notebooks
+2026-04-09 11:53:16,884 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Notebooks'
+2026-04-09 11:53:16,888 - INFO - Grilla de productos encontrada
+2026-04-09 11:53:25,597 - INFO - Scrapeando página 1
+2026-04-09 11:56:49,591 - INFO - 200 productos insertados correctamente
+2026-04-09 11:56:49,656 - INFO - Botón siguiente clickeado
+2026-04-09 11:56:52,656 - INFO - Scrapeando página 2
+2026-04-09 12:00:16,746 - INFO - 200 productos insertados correctamente
+2026-04-09 12:00:16,810 - INFO - Botón siguiente clickeado
+2026-04-09 12:00:19,811 - INFO - Scrapeando página 3
+2026-04-09 12:03:43,923 - INFO - 200 productos insertados correctamente
+2026-04-09 12:03:43,985 - INFO - Botón siguiente clickeado
+2026-04-09 12:03:46,986 - INFO - Scrapeando página 4
+2026-04-09 12:07:10,990 - INFO - 200 productos insertados correctamente
+2026-04-09 12:07:11,052 - INFO - Botón siguiente clickeado
+2026-04-09 12:07:14,054 - INFO - Scrapeando página 5
+2026-04-09 12:10:38,019 - INFO - 200 productos insertados correctamente
+2026-04-09 12:10:38,080 - INFO - Botón siguiente clickeado
+2026-04-09 12:10:41,081 - INFO - Scrapeando página 6
+2026-04-09 12:14:05,099 - INFO - 200 productos insertados correctamente
+2026-04-09 12:14:05,165 - INFO - Botón siguiente clickeado
+2026-04-09 12:14:08,167 - INFO - Scrapeando página 7
+2026-04-09 12:17:04,585 - INFO - 173 productos insertados correctamente
+2026-04-09 12:17:09,712 - INFO - No hay botón siguiente → fin
+2026-04-09 12:17:09,769 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:17:10,317 - INFO - Subcategoría encontrada: Celulares
+2026-04-09 12:17:10,361 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Celulares'
+2026-04-09 12:17:10,367 - INFO - Grilla de productos encontrada
+2026-04-09 12:17:18,656 - INFO - Scrapeando página 1
+2026-04-09 12:17:39,129 - INFO - 20 productos insertados correctamente
+2026-04-09 12:17:39,189 - INFO - Botón siguiente clickeado
+2026-04-09 12:17:42,190 - INFO - Scrapeando página 2
+2026-04-09 12:20:36,622 - INFO - 171 productos insertados correctamente
+2026-04-09 12:20:41,750 - INFO - No hay botón siguiente → fin
+2026-04-09 12:20:41,807 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:20:42,364 - INFO - Subcategoría encontrada: IPhone
+2026-04-09 12:20:42,409 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'IPhone'
+2026-04-09 12:20:42,415 - INFO - Grilla de productos encontrada
+2026-04-09 12:20:50,698 - INFO - Scrapeando página 1
+2026-04-09 12:22:21,520 - INFO - 89 productos insertados correctamente
+2026-04-09 12:22:26,641 - INFO - No hay botón siguiente → fin
+2026-04-09 12:22:26,694 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:22:27,232 - INFO - Subcategoría encontrada: Consolas
+2026-04-09 12:22:27,286 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Consolas'
+2026-04-09 12:22:27,290 - INFO - Grilla de productos encontrada
+2026-04-09 12:22:35,570 - INFO - Scrapeando página 1
+2026-04-09 12:23:11,276 - INFO - 35 productos insertados correctamente
+2026-04-09 12:23:16,388 - INFO - No hay botón siguiente → fin
+2026-04-09 12:23:16,434 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:23:16,961 - INFO - Subcategoría encontrada: Tablets
+2026-04-09 12:23:16,991 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Tablets'
+2026-04-09 12:23:16,999 - INFO - Grilla de productos encontrada
+2026-04-09 12:23:25,275 - INFO - Scrapeando página 1
+2026-04-09 12:26:36,232 - INFO - 187 productos insertados correctamente
+2026-04-09 12:26:41,371 - INFO - No hay botón siguiente → fin
+2026-04-09 12:26:41,431 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:26:41,971 - INFO - Subcategoría encontrada: Wearables
+2026-04-09 12:26:42,025 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'Wearables'
+2026-04-09 12:26:42,033 - INFO - Grilla de productos encontrada
+2026-04-09 12:26:50,319 - INFO - Scrapeando página 1
+2026-04-09 12:28:51,656 - INFO - 119 productos insertados correctamente
+2026-04-09 12:28:56,775 - INFO - No hay botón siguiente → fin
+2026-04-09 12:28:56,828 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:28:56,859 - INFO - Subcategoría encontrada: All-In-Ones
+2026-04-09 12:28:56,922 - INFO - Extrayendo datos de la sección 'Tecnología' y subcategoría 'All-In-Ones'
+2026-04-09 12:28:56,929 - INFO - Grilla de productos encontrada
+2026-04-09 12:29:05,210 - INFO - Scrapeando página 1
+2026-04-09 12:32:29,189 - INFO - 200 productos insertados correctamente
+2026-04-09 12:32:34,317 - INFO - No hay botón siguiente → fin
+2026-04-09 12:32:34,391 - INFO - Reabriendo menú principal 'Tecnología' para la siguiente subcategoría
+2026-04-09 12:32:34,422 - INFO - Procesando sección: Hardware
+2026-04-09 12:32:35,445 - ERROR - Error al encontrar el elemento: Message: element click intercepted: Element <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1guj8av" tabindex="0" type="button">...</button> is not clickable at point (984, 33). Other element would receive the click: <div class="MuiBox-root css-1adbve3"></div>
+  (Session info: chrome=146.0.7680.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff68b3c29c5+2ed785]
+	chromedriver!GetHandleVerifier [0x7ff68b0ea0d0+14e90]
+	chromedriver!(No symbol) [0x7ff68ae4db2d]
+	chromedriver!(No symbol) [0x7ff68aeaf0e5]
+	chromedriver!(No symbol) [0x7ff68aeac7fa]
+	chromedriver!(No symbol) [0x7ff68aea9685]
+	chromedriver!(No symbol) [0x7ff68aea8537]
+	chromedriver!(No symbol) [0x7ff68ae9b186]
+	chromedriver!(No symbol) [0x7ff68aecff8a]
+	chromedriver!(No symbol) [0x7ff68ae9aa06]
+	chromedriver!(No symbol) [0x7ff68aef3b9b]
+	chromedriver!(No symbol) [0x7ff68ae99298]
+	chromedriver!(No symbol) [0x7ff68ae9a183]
+	chromedriver!GetHandleVerifier [0x7ff68b3ede0d+318bcd]
+	chromedriver!GetHandleVerifier [0x7ff68b3e8588+313348]
+	chromedriver!GetHandleVerifier [0x7ff68b409d7a+334b3a]
+	chromedriver!GetHandleVerifier [0x7ff68b106785+31545]
+	chromedriver!GetHandleVerifier [0x7ff68b10facc+3a88c]
+	chromedriver!GetHandleVerifier [0x7ff68b0f3634+1e3f4]
+	chromedriver!GetHandleVerifier [0x7ff68b0f37e6+1e5a6]
+	chromedriver!GetHandleVerifier [0x7ff68b0d7e37+2bf7]
+	KERNEL32!BaseThreadInitThunk [0x7ffd1c10e8d7+17]
+	ntdll!RtlUserThreadStart [0x7ffd1d32c3fc+2c]
+
+2026-04-09 12:32:35,446 - INFO - Scraping completado exitosamente.
+2026-04-09 12:32:39,628 - INFO - Driver cerrado.

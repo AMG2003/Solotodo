@@ -85,19 +85,15 @@ def scrape_data(driver):
                 nombre_subcategoria = subcategoria.text
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
-                time.sleep(5) # Breve pausa para que la página se recargue
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
                 sub_datos(driver, nombre_seccion, nombre_subcategoria,conn) # Función para extraer datos de la subcategoría
-                driver.back() # Volvemos a la página anterior para seleccionar la siguiente subcategoría
-                logging.info(f"Volviendo al home")
-                time.sleep(5) # Breve pausa para que la página se recargue
-                 # 🔁 REABRIR menú SIEMPRE
                 boton_principal = WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
                 boton_principal.click()
                 logging.info(f"Reabriendo menú principal '{nombre_seccion}' para la siguiente subcategoría")
-                time.sleep(5) # Breve pausa para que el menú se despliegue nuevamente
-
+                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/header/div/div/div/div[2]")))
+                
         logging.info(f"Finalizada la sección {nombre_seccion}")
 
     except Exception as e:
