@@ -38,7 +38,7 @@ def scrape_data(driver):
 
     try:
         wait = WebDriverWait(driver,10)
-        element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'css-1udllag')))
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'css-1udllag')))
         logging.info("Elemento encontrado")
         # 1. Definimos el XPath base de los 4 botones principales
         xpath_botones_principales = '//*[@id="__next"]/div/div[1]/header/div/div/div/div[2]/button'
@@ -51,7 +51,7 @@ def scrape_data(driver):
         for i in range(1, cantidad_principales + 1):
             # Localizamos el botón principal por su índice (XPath empieza en 1)
             xpath_boton = f'({xpath_botones_principales})[{i}]'
-            boton_principal = WebDriverWait(driver, 10).until(
+            boton_principal = wait.until(
                 EC.element_to_be_clickable((By.XPATH, xpath_boton))
             )
         
@@ -64,7 +64,7 @@ def scrape_data(driver):
             time.sleep(1) # Breve pausa para que el menú se despliegue
 
             # Esperamos el contenedor del menú desplegado (ajusta clase si cambia)
-            menu = WebDriverWait(driver, 10).until(
+            wait.until(
                 EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]"))
             )
 
@@ -79,20 +79,20 @@ def scrape_data(driver):
 
             for j in range(1, cantidad_sub + 1):
                 xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div/span"
-                subcategoria = WebDriverWait(driver, 10).until(
+                subcategoria = wait.until(
                     EC.element_to_be_clickable((By.XPATH, xpath_subcategoria))
                 )
                 nombre_subcategoria = subcategoria.text
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
                 subcategoria.click()
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
+                wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
                 sub_datos(driver, nombre_seccion, nombre_subcategoria,conn) # Función para extraer datos de la subcategoría
-                boton_principal = WebDriverWait(driver, 10).until(
+                boton_principal = wait.until(
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
                 boton_principal.click()
                 logging.info(f"Reabriendo menú principal '{nombre_seccion}' para la siguiente subcategoría")
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/header/div/div/div/div[2]")))
+                wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/header/div/div/div/div[2]")))
                 
         logging.info(f"Finalizada la sección {nombre_seccion}")
 

@@ -17,7 +17,8 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
     
 
     try:
-        grilla=WebDriverWait(driver, 10).until(
+        wait = WebDriverWait(driver,10)
+        grilla=wait.until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'))
         )
         if grilla:
@@ -26,12 +27,12 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
            logging.warning("Grilla de productos no encontrada")
         
         try:
-            boton_svg = WebDriverWait(driver, 10).until(
+            boton_svg = wait.until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[2]/div"))
             )
             boton_svg.click()
             time.sleep(5) # Esperamos a que se cargue la nueva sección después de hacer click
-            opcion_200 = WebDriverWait(driver, 10).until(
+            opcion_200 = wait.until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
             )
             opcion_200.click()
@@ -80,7 +81,7 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
 
             # 👉 Intentar ir a siguiente página
             try:
-                boton_siguiente = WebDriverWait(driver, 5).until(
+                boton_siguiente = wait.until(
                     EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[3]/button[3]"))
                 )
 
