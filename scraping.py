@@ -48,18 +48,22 @@ def scrape_data(driver):
         cantidad_principales = len(botones)
         logging.info(f"Cantidad de botones principales encontrados: {cantidad_principales}")
 
-        for i in range(1, cantidad_principales + 1):
+        for i in range(1, 5):
             # Localizamos el botón principal por su índice (XPath empieza en 1)
             xpath_boton = f'({xpath_botones_principales})[{i}]'
             boton_principal = wait.until(
                 EC.element_to_be_clickable((By.XPATH, xpath_boton))
             )
+
+            # 🔥 SCROLL (evita click interceptado)
+            driver.execute_script("arguments[0].scrollIntoView(true);", boton_principal)
         
             nombre_seccion = boton_principal.text
             logging.info(f"Procesando sección: {nombre_seccion}")
         
-            # Hacemos clic para desplegar las categorías
-            boton_principal.click()
+            driver.execute_script("window.scrollTo(0, 0);")
+            # 🔥 CLICK ROBUSTO
+            driver.execute_script("arguments[0].click();", boton_principal)
             logging.info(f"Botón '{nombre_seccion}' clickeado")     
             time.sleep(1) # Breve pausa para que el menú se despliegue
 
