@@ -17,7 +17,7 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
     
 
     try:
-        wait = WebDriverWait(driver,10)
+        wait = WebDriverWait(driver,7)
         grilla=wait.until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'))
         )
@@ -31,12 +31,12 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[2]/div"))
             )
             boton_svg.click()
-            time.sleep(5) # Esperamos a que se cargue la nueva sección después de hacer click
+            wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/ul")))
             opcion_200 = wait.until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
             )
             opcion_200.click()
-            time.sleep(3) # Esperamos a que se cargue la nueva sección después de hacer click
+            wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[2]/div[1]")))
 
         except Exception as e:
             logging.warning("no se pudo cambiar a 200")
@@ -59,7 +59,7 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
                         continue  # 🔥 evita errores
 
                     nombre = nombre_elem[0].text
-                    precio = precio_elem[0].text
+                    precio = float(precio_elem[0].text)
                     link = p.get_attribute("href")
 
                     
