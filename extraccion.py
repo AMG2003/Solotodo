@@ -59,7 +59,7 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
                         continue  # 🔥 evita errores
 
                     nombre = nombre_elem[0].text
-                    precio = float(precio_elem[0].text)
+                    precio = precio_elem[0].text
                     link = p.get_attribute("href")
 
                     
