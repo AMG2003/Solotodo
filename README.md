@@ -1,1 +1,2 @@
 # Solotodo
+# Pipeline ETL que captura los datos con web scraping en la pagina Solotodo cada categoria con su cubcategoria , normalizando los datos antes de ingresarlos a la base de datos de Oracle , posteriormente , hacer analisis de los datos diariamente. Con tecnologias como Docker y airflow 

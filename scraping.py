@@ -82,21 +82,43 @@ def scrape_data(driver):
             logging.info(f"Cantidad de subcategorías encontradas: {cantidad_sub}")
 
             for j in range(1, cantidad_sub + 1):
+
+                # Construimos el XPath de la subcategoría actual
                 xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div/span"
+
+                # Esperamos que la subcategoría sea clickeable
                 subcategoria = wait.until(
                     EC.element_to_be_clickable((By.XPATH, xpath_subcategoria))
                 )
+
+                # Verificamos que el elemento exista antes de interactuar
+                if not subcategoria:
+                    logging.warning(f"Subcategoría {j} no encontrada, saltando")
+                    continue
+
+                # Obtenemos el nombre de la subcategoría
                 nombre_subcategoria = subcategoria.text
                 logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
+
+                # Hacemos click en la subcategoría
                 subcategoria.click()
+
+                # Esperamos que la página de productos cargue (ajusta el XPath si cambia)
                 wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
+
                 sub_datos(driver, nombre_seccion, nombre_subcategoria,conn) # Función para extraer datos de la subcategoría
+
+                # Volvemos al menú principal para la siguiente subcategoría
                 boton_principal = wait.until(
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
+                #click para ingresar a la sigiuiente subcategoria
                 boton_principal.click()
+
                 logging.info(f"Reabriendo menú principal '{nombre_seccion}' para la siguiente subcategoría")
-                wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/header/div/div/div/div[2]")))
+
+                # Esperamos que el menú se despliegue nuevamente
+                wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]")))
                 
         logging.info(f"Finalizada la sección {nombre_seccion}")
 
