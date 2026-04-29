@@ -1,5 +1,4 @@
 from os import link
-
 import oracledb
 from selenium import webdriver  
 from selenium.webdriver.common.by import By
@@ -29,7 +28,11 @@ def conectar_db():
 
 def configurar_driver():
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--blink-settings=imagesEnabled=false")
+    chrome_options.add_argument("--headless")
     return webdriver.Chrome(options=chrome_options)
 
 def scrape_data(driver):
@@ -74,61 +77,48 @@ def scrape_data(driver):
                 EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]"))
             )
 
-            # Obtener subcategorías
-            subcategorias = driver.find_elements(
-                By.XPATH,
-                "/html/body/div[2]/div[3]/div[2]/div[1]/div/a"
-            )
+            # Esperar a que aparezca el menú (overlay)
+            menu = wait.until(EC.presence_of_element_located((
+                By.XPATH, "//div[@role='presentation']"
+            )))
 
-            cantidad_sub = len(subcategorias)
-            logging.info(f"Cantidad de subcategorías encontradas: {cantidad_sub}")
+            #Buscar TODOS los links dentro del menú
+            links = menu.find_elements(By.XPATH, ".//a")
 
-            for j in range(1, cantidad_sub + 1):
+            subcategorias_links = []
 
-                try:
-                    elemento = driver.find_element(By.XPATH, f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]")
+            for link in links:
+                href = link.get_attribute("href")
+                nombre = link.text.strip()
 
-                     # 🔍 Buscar si tiene <a>
-                    link_elem = elemento.find_elements(By.TAG_NAME, "a")
+                if href and nombre:
+                    subcategorias_links.append((nombre, href))
 
-                    if not link_elem:
-                        logging.warning(f"Subcategoría {j} sin link → saltando")
-                        continue
+            logging.info(f"Subcategorías válidas: {len(subcategorias_links)}")
+            
+            for nombre_subcategoria, href in subcategorias_links:
 
-                    link = link_elem[0]
+                logging.info(f"Entrando a: {nombre_subcategoria}")
 
-                    # validar href
-                    href = link.get_attribute("href")
-                    if not href:
-                        logging.warning(f"Subcategoría sin href → saltando")
-                        continue
+                driver.get(href)
 
-                    nombre_subcategoria = link.text
-                    logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
+                wait.until(EC.presence_of_element_located((
+                    By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'
+                )))
 
-                    # 🔥 CLICK SEGURO
-                    driver.execute_script("arguments[0].click();", link)
+                sub_datos(driver, nombre_seccion, nombre_subcategoria, conn)
 
-                except Exception as e:
-                    logging.warning(f"No se pudo procesar subcategoría {j}: {e}")
-                    continue
+                # volver al menú
+                driver.get('https://www.solotodo.com')
 
-                # Esperamos que la página de productos cargue (ajusta el XPath si cambia)
-                wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
-
-                sub_datos(driver, nombre_seccion, nombre_subcategoria,conn) # Función para extraer datos de la subcategoría
-
-                # Volvemos al menú principal para la siguiente subcategoría
                 boton_principal = wait.until(
                     EC.element_to_be_clickable((By.XPATH, f'({xpath_botones_principales})[{i}]'))
                 )
-                #click para ingresar a la sigiuiente subcategoria
                 boton_principal.click()
 
-                logging.info(f"Reabriendo menú principal '{nombre_seccion}' para la siguiente subcategoría")
-
-                # Esperamos que el menú se despliegue nuevamente
-                wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]")))
+                wait.until(EC.presence_of_element_located((
+                    By.XPATH, "/html/body/div[2]/div[3]/div[2]/div[1]"
+                )))
                 
         logging.info(f"Finalizada la sección {nombre_seccion}")
 

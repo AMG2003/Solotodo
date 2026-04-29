@@ -9,15 +9,14 @@ from db import insertar_productos
 
 def configurar_driver():
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
     return webdriver.Chrome(options=chrome_options)
 
 def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
     logging.info(f"Extrayendo datos de la sección '{nombre_seccion}' y subcategoría '{nombre_subcategoria}'")
     
-
     try:
         wait = WebDriverWait(driver,7)
+        #identificamos la grilla de productos
         grilla=wait.until(
                 EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]'))
         )
@@ -27,15 +26,21 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
            logging.warning("Grilla de productos no encontrada")
         
         try:
+            # Cambiar a mostrar 200 productos por página
             boton_svg = wait.until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[3]/div[3]/div/div/div[2]/div"))
             )
             boton_svg.click()
+
+            #localizamos el menu desplegable de cantidad de productos
             wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div[2]/div[3]/ul")))
+            #localizamos la opcion de 200 productos por pagina
             opcion_200 = wait.until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
             )
             opcion_200.click()
+
+            # Esperamos que la página se recargue con 200 productos (ajusta el XPath si cambia)
             wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[2]/div[1]")))
 
         except Exception as e:
@@ -71,7 +76,7 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
                         "link": link
                     })
 
-                    time.sleep(1)  # evita bloqueo
+                
 
                 except Exception as e:
                     logging.warning(f"Error producto: {e}")  
