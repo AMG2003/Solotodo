@@ -1,3 +1,5 @@
+from os import link
+
 import oracledb
 from selenium import webdriver  
 from selenium.webdriver.common.by import By
@@ -83,25 +85,33 @@ def scrape_data(driver):
 
             for j in range(1, cantidad_sub + 1):
 
-                # Construimos el XPath de la subcategoría actual
-                xpath_subcategoria = f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]/a/div/span"
+                try:
+                    elemento = driver.find_element(By.XPATH, f"/html/body/div[2]/div[3]/div[2]/div[1]/div[{j}]")
 
-                # Esperamos que la subcategoría sea clickeable
-                subcategoria = wait.until(
-                    EC.element_to_be_clickable((By.XPATH, xpath_subcategoria))
-                )
+                     # 🔍 Buscar si tiene <a>
+                    link_elem = elemento.find_elements(By.TAG_NAME, "a")
 
-                # Verificamos que el elemento exista antes de interactuar
-                if not subcategoria:
-                    logging.warning(f"Subcategoría {j} no encontrada, saltando")
+                    if not link_elem:
+                        logging.warning(f"Subcategoría {j} sin link → saltando")
+                        continue
+
+                    link = link_elem[0]
+
+                    # validar href
+                    href = link.get_attribute("href")
+                    if not href:
+                        logging.warning(f"Subcategoría sin href → saltando")
+                        continue
+
+                    nombre_subcategoria = link.text
+                    logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
+
+                    # 🔥 CLICK SEGURO
+                    driver.execute_script("arguments[0].click();", link)
+
+                except Exception as e:
+                    logging.warning(f"No se pudo procesar subcategoría {j}: {e}")
                     continue
-
-                # Obtenemos el nombre de la subcategoría
-                nombre_subcategoria = subcategoria.text
-                logging.info(f"Subcategoría encontrada: {nombre_subcategoria}")
-
-                # Hacemos click en la subcategoría
-                subcategoria.click()
 
                 # Esperamos que la página de productos cargue (ajusta el XPath si cambia)
                 wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[1]/main/div/div/div[4]/div[2]/div[1]')))
