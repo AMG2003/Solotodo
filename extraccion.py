@@ -36,7 +36,8 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[3]/ul/li[6]"))
             )
             opcion_200.click()
-            wait.until(EC.presence_of_element_located((By.XPATH, "/html/body/div/div/div[1]/main/div/div/div[4]/div[2]/div[1]")))
+            #esperar a que carguen los productos (puede variar según la velocidad de la página)
+            wait.until(lambda d: len(d.find_elements(By.XPATH, "//a[contains(@href,'/products/')]")) > 30)
 
         except Exception as e:
             logging.warning("no se pudo cambiar a 200")
@@ -44,6 +45,10 @@ def sub_datos(driver, nombre_seccion, nombre_subcategoria,conn):
         pagina = 1
         while True:
             logging.info(f"Scrapeando página {pagina}")
+
+            wait.until(lambda d: len(d.find_elements(
+                By.XPATH, "//a[contains(@href,'/products/')]"
+            )) > 10)
 
             # 🧲 Obtener productos
             productos = driver.find_elements(By.XPATH, "//div[contains(@class,'MuiGrid-root')]//a")
