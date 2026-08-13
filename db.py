@@ -90,4 +90,3 @@ def insertar_productos(productos,conn):
 
     finally:
         cursor.close()
-        conn.close()
